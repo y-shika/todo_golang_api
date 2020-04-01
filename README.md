@@ -1,0 +1,5 @@
+# todo_backend
+
+Backend入門のプロジェクト
+
+TODOアプリを作りながらBackendを習得していくことを目的としている
