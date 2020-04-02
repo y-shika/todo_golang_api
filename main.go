@@ -7,8 +7,10 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func hello(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello!")
+func helloHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Hello!")
+	}
 }
 
 func world(w http.ResponseWriter, r *http.Request) {
@@ -20,7 +22,8 @@ func main() {
 
 	r := mux.NewRouter()
 
-	r.HandleFunc("/hello", hello)
+	r.Handle("/hello", helloHandler()).Methods(http.MethodGet)
+
 	r.HandleFunc("/world", world)
 
 	http.ListenAndServe(":80", r)
