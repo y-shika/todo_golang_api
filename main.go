@@ -3,19 +3,25 @@ package main
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
-type helloHandler struct{}
+func hello(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello!")
+}
 
-func (h *helloHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello World!")
+func world(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "World!")
 }
 
 func main() {
-	handler := helloHandler{}
-	server := http.Server{
-		Addr:    "127.0.0.1:8080",
-		Handler: &handler,
-	}
-	server.ListenAndServe()
+	print("Start Server")
+
+	r := mux.NewRouter()
+
+	r.HandleFunc("/hello", hello)
+	r.HandleFunc("/world", world)
+
+	http.ListenAndServe(":80", r)
 }
