@@ -1,0 +1,11 @@
+version: '3'
+services: 
+    app:
+        build: .
+        command: go run main.go
+        ports: 
+            - "8080:8080"
+        container_name: "app"
+        tty: true
+        volumes: 
+            - .:/go/src/app
