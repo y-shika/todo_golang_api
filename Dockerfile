@@ -1,3 +1,21 @@
-FROM golang:1.13
+FROM golang:alpine as builder
 
-WORKDIR /go/src/app
+RUN apk update \
+    && apk add --no-cache git curl \
+    && go get github.com/oxequa/realize
+
+WORKDIR /app
+COPY go.mod .
+COPY go.sum .
+
+RUN go mod download
+COPY . .
+
+RUN GOOS=linux GOARCH=amd64 go build -o /main
+
+FROM alpine:3.9
+
+COPY --from=builder /main .
+
+ENV PORT=${PORT}
+ENTRYPOINT ["/main"]

@@ -3,7 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 )
@@ -44,14 +46,22 @@ func world(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	print("Start Server")
+	port := os.Getenv("PORT")
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
+	fmt.Printf("Starting server at Port %s", port)
 
 	r := mux.NewRouter()
+
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Welcome")
+	})
 
 	r.Handle("/api/github", fakeGithubAPIHandler()).Methods(http.MethodGet)
 	r.Handle("/hello", helloHandler()).Methods(http.MethodGet)
 
 	r.HandleFunc("/world", world)
 
-	http.ListenAndServe(":8080", r)
+	http.ListenAndServe(":"+port, r)
 }
