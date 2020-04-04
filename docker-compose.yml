@@ -6,6 +6,7 @@ services:
             dockerfile: Dockerfile
             target: builder
         command: go run main.go
+        #command: realize start --run --no-config
         environment: 
             - PORT=8080
         ports: 
