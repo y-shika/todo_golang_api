@@ -4,7 +4,7 @@ services:
         container_name: "app"
         build:
             context: .
-            dockerfile: .docker/golang/Dockerfile
+            dockerfile: ./Dockerfile.golang
             target: hotreload
         # ローカルからコンテナへのファイル群の受け渡し
         volumes: 
