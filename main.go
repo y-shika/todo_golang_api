@@ -13,7 +13,7 @@ import (
 type fakeGithubData struct {
 	Login     string `json:"login"`
 	ID        int    `json:"id"`
-	AvatarURL string `json:"avatarUrl"`
+	AvatarURL string `json:"avatar_url"`
 }
 
 func fakeGithubAPIHandler() http.HandlerFunc {
