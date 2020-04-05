@@ -1,3 +1,4 @@
+# Herokuデプロイ用のDockerfile
 FROM golang:alpine as builder
 
 RUN apk update \

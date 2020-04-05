@@ -1,17 +1,19 @@
 version: '3.5'
 services: 
     app:
+        container_name: "app"
         build:
             context: .
-            dockerfile: Dockerfile
-            target: builder
-        command: go run main.go
-        #command: realize start --run --no-config
+            dockerfile: .docker/golang/Dockerfile
+            target: hotreload
+        # ローカルからコンテナへのファイル群の受け渡し
+        volumes: 
+            - .:/go/src/todo_api
+        working_dir: /go/src/todo_api
+        command: realize start --name='app' --run
         environment: 
             - PORT=8080
         ports: 
             - 8080:8080
-        container_name: "app"
         tty: true
-        volumes: 
-            - .:/go/src/app
+        restart: always
