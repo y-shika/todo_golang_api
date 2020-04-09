@@ -13,7 +13,6 @@ import (
 )
 
 func main() {
-	// TODO: この辺りはherokuとかでも大丈夫か確認する
 	host := os.Getenv("HOST")
 	if host == "" {
 		host = "0.0.0.0"
