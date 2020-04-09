@@ -5,18 +5,24 @@ RUN apk update \
     && apk add --no-cache git curl \
     && go get github.com/oxequa/realize
 
-WORKDIR /app
+WORKDIR /go/src/api
+
 COPY go.mod .
 COPY go.sum .
-
 RUN go mod download
+
 COPY . .
 
-RUN GOOS=linux GOARCH=amd64 go build -o /main
+RUN mkdir -p /build/web
+
+RUN GOOS=linux GOARCH=amd64 go build -o=/build/server web/server.go
 
 FROM alpine:3.9
 
-COPY --from=builder /main .
+COPY --from=builder /build /build
+RUN chmod u+x /build/server
 
 ENV PORT=${PORT}
-ENTRYPOINT ["/main"]
+
+WORKDIR /build
+ENTRYPOINT ["./server"]
