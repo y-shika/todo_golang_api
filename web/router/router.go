@@ -26,7 +26,8 @@ func New() http.Handler {
 	// 	r.Use()
 	// }
 
-	r.Handle("/todos", todoHandler.GetTodos()).Methods(http.MethodGet)
+	todoService := r.PathPrefix("/TodoService").Subrouter()
+	todoService.Handle("/GetTodos", todoHandler.GetTodos()).Methods(http.MethodGet)
 
 	return r
 }
