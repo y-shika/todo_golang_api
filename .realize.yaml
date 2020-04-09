@@ -8,13 +8,10 @@ schema:
       commands:
         install:
           status: true
-          method: go build -o ./app ./main.go
-        # build:
-        #   status: true
-        #   method: go build -o ./app ./main.go
+          method: go build -o /build/server ./web/server.go
         run:
           status: true
-          method: ./app
+          method: /build/server
       watcher:
         extensions:
           - go
