@@ -30,7 +30,7 @@ func (gw *Todo) GetTodoLists(ctx context.Context) ([]*model.Todo, error) {
 			ID:     "2",
 			Title:  "Title_2",
 			Active: true,
-			Detail: "Detaile_2",
+			Detail: "Detail_2",
 		},
 	}, nil
 }
