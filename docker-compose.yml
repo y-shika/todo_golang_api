@@ -1,20 +1,38 @@
 version: '3.5'
 services: 
     app:
-        container_name: "app"
+        container_name: "golang_api"
         build:
             context: .
             dockerfile: ./Dockerfile.golang
-            target: hotreload
         # ローカルからコンテナへのファイル群の受け渡し
         volumes: 
             - .:/go/src/todo_api
         working_dir: /go/src/todo_api
         command: realize start --name='app' --run
+        # TODO: .envにて記述したので変更した。動作確認をする。
         # Herokuデプロイに対応したため環境変数PORTを定義する必要がある
         environment: 
-            - PORT=8080
+            - PORT=${PORT}
         ports: 
             - 8080:8080
         tty: true
+        depends_on: 
+            - mysql
         restart: always
+    mysql:
+        container_name: "mysql_db"
+        image: mysql:8.0
+        ports: 
+            - 3306:3306
+        volumes: 
+            # 初期データを投入するSQLが格納されているdir
+            - ./db/mysql_init:/docker-entrypoint-initdb.d
+            # 永続化するときにマウントするdir
+            - ./db/mysql_data:/var/lib/mysql
+            # mysql8.0対応
+            - ./db/mysql_conf/:/etcmysql/conf.d
+        environment: 
+            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+            MYSQL_USER: ${DB_USER}
+            MYSQL_PASSWORD: ${DB_PASSWORD}

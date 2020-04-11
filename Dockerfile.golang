@@ -1,5 +1,5 @@
 # ローカル開発用のDockerfile (hotreload対応)
-FROM alpine:3.11 as hotreload
+FROM alpine:3.11
 
 RUN apk add --no-cache \
   ca-certificates
@@ -69,3 +69,6 @@ RUN apk add --no-cache git
 
 ## hot reload libary
 RUN go get -u github.com/oxequa/realize
+
+## mysql
+RUN go get github.com/go-sql-driver/mysql;
