@@ -10,7 +10,6 @@ services:
             - .:/go/src/todo_api
         working_dir: /go/src/todo_api
         command: realize start --name='app' --run
-        # TODO: .envにて記述したので変更した。動作確認をする。
         # Herokuデプロイに対応したため環境変数PORTを定義する必要がある
         environment: 
             - PORT=${PORT}
