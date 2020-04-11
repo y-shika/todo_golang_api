@@ -1,11 +1,6 @@
 # Created by https://www.gitignore.io/api/go,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=go,visualstudiocode
 
-### 実行ファイル ###
-*
-!*/
-!*.*
-
 ### Go ###
 # Binaries for programs and plugins
 *.exe
@@ -39,3 +34,11 @@
 .history
 
 # End of https://www.gitignore.io/api/go,visualstudiocode
+
+### 実行ファイル ###
+*
+!*/
+!*.*
+
+### 環境変数 ###
+.env
