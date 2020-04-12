@@ -15,6 +15,8 @@ type MySQLClient struct {
 // NewMySQLClient is a new MySQL client.
 func NewMySQLClient() (*MySQLClient, error) {
 	mysqlConf := mysql.Config{
+		// 一般ユーザで認証するには追加の設定が必要そうなのでrootにした
+		// 参考: https://yukun.info/create-user-grant-password/
 		User:   "root",
 		Passwd: os.Getenv("MYSQL_ROOT_PASSWORD"),
 		Net:    "tcp",
