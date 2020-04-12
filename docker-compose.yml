@@ -12,7 +12,7 @@ services:
         command: realize start --name='app' --run
         # Herokuデプロイに対応したため環境変数PORTを定義する必要がある
         environment: 
-            - PORT=${PORT}
+            PORT: ${PORT}
         ports: 
             - 8080:8080
         tty: true
@@ -37,3 +37,4 @@ services:
             MYSQL_PASSWORD: ${DB_PASSWORD}
             # timezone設定 (mysql_confに書くと修正箇所が多くなる)
             TZ: Asia/Tokyo
+        restart: always
