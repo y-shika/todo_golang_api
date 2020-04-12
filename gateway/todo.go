@@ -30,5 +30,23 @@ func (gw *Todo) GetTodoLists(ctx context.Context) ([]*model.Todo, error) {
 
 	log.Println("Succeed to connect MySQL")
 
-	return []*model.Todo{}, nil
+	rows, err := db.Query("SELECT * FROM todos")
+	if err != nil {
+		return nil, fmt.Errorf("get todos from MySQL: %w", err)
+	}
+	defer rows.Close()
+
+	todos := make([]*model.Todo, 0)
+
+	for rows.Next() {
+		var todo model.Todo
+
+		if err := rows.Scan(&todo.ID, &todo.Title, &todo.Active, &todo.Detail); err != nil {
+			return nil, fmt.Errorf("get record from todo table: %w", err)
+		}
+
+		todos = append(todos, &todo)
+	}
+
+	return todos, nil
 }
