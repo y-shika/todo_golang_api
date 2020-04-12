@@ -21,7 +21,6 @@ func NewTodo() *Todo {
 
 // GetTodoLists returns
 func (gw *Todo) GetTodoLists(ctx context.Context) ([]*model.Todo, error) {
-	// TODO: 実装する
 	db, err := NewMySQLClient()
 	if err != nil {
 		return nil, fmt.Errorf("initialize MySQL client: %w", err)
