@@ -13,6 +13,8 @@ services:
         # Herokuデプロイに対応したため環境変数PORTを定義する必要がある
         environment: 
             PORT: ${PORT}
+            # golang側のsqlクライアント認証で使用する
+            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
         ports: 
             - 8080:8080
         tty: true

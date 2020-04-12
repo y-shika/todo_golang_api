@@ -15,10 +15,13 @@ type MySQLClient struct {
 // NewMySQLClient is a new MySQL client.
 func NewMySQLClient() (*MySQLClient, error) {
 	mysqlConf := mysql.Config{
-		User:   os.Getenv("DB_USER"),
-		Passwd: os.Getenv("DB_PASSWORD"),
+		User:   "root",
+		Passwd: os.Getenv("MYSQL_ROOT_PASSWORD"),
 		Net:    "tcp",
-		DBName: "todo_golang_api",
+		// ${MySQLコンテナ名}:${ポート番号}
+		Addr:                 "mysql_db:3306",
+		DBName:               "todo_golang_api",
+		AllowNativePasswords: true,
 	}
 
 	db, err := sql.Open("mysql", mysqlConf.FormatDSN())
