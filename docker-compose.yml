@@ -35,3 +35,5 @@ services:
             MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
             MYSQL_USER: ${DB_USER}
             MYSQL_PASSWORD: ${DB_PASSWORD}
+            # timezone設定 (mysql_confに書くと修正箇所が多くなる)
+            TZ: Asia/Tokyo
