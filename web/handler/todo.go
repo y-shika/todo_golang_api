@@ -3,6 +3,7 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/y-shika/todo_golang_api/usecase"
@@ -27,7 +28,7 @@ func (h *TodoServiceHandler) GetTodos() http.HandlerFunc {
 
 		todos, err := h.usecase.GetTodos(ctx)
 		if err != nil {
-			// TODO: logを自分で実装するか検討する
+			log.Println("failed to get todos:", err)
 			http.Error(w, "500 Internal Server Error", http.StatusInternalServerError)
 			return
 		}
