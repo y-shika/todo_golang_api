@@ -1,7 +1,6 @@
 package config
 
 import (
-	"log"
 	"os"
 )
 
@@ -16,6 +15,5 @@ func init() {
 
 // IsMockMode returns true when env ENABLE_MOCK is not empty.
 func IsMockMode() bool {
-	log.Println("isMockEnabled:", isMockEnabled)
 	return isMockEnabled != ""
 }
