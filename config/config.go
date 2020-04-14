@@ -4,7 +4,6 @@ import (
 	"os"
 )
 
-// TODO: Herokuにこれらの環境変数を適切な値で設定する
 var (
 	usage         string
 	isMockEnabled string

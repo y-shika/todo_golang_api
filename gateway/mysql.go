@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/go-sql-driver/mysql"
-
 	"github.com/y-shika/todo_golang_api/config"
 )
 
@@ -16,7 +15,6 @@ type MySQLClient struct {
 
 // NewMySQLClient is a new MySQL client.
 func NewMySQLClient() (*MySQLClient, error) {
-	// TODO: heroku用とローカル用のクライアントを作成する
 	mysqlConf := mysql.Config{}
 
 	// TODO: DBの接続先が増えたらこの部分の条件分岐も増やす
