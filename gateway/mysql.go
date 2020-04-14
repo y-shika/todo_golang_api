@@ -5,6 +5,8 @@ import (
 	"os"
 
 	"github.com/go-sql-driver/mysql"
+
+	"github.com/y-shika/todo_golang_api/config"
 )
 
 // MySQLClient is a sql.DB wrapper.
@@ -14,21 +16,46 @@ type MySQLClient struct {
 
 // NewMySQLClient is a new MySQL client.
 func NewMySQLClient() (*MySQLClient, error) {
-	mysqlConf := mysql.Config{
-		// 一般ユーザで認証するには追加の設定が必要そうなのでrootにした
-		// 参考: https://yukun.info/create-user-grant-password/
-		User:   "root",
-		Passwd: os.Getenv("MYSQL_ROOT_PASSWORD"),
-		Net:    "tcp",
-		// ${MySQLコンテナ名}:${ポート番号}
-		Addr:                 "mysql_db:3306",
-		DBName:               "todo_golang_api",
-		AllowNativePasswords: true,
+	// TODO: heroku用とローカル用のクライアントを作成する
+	mysqlConf := mysql.Config{}
+
+	// TODO: DBの接続先が増えたらこの部分の条件分岐も増やす
+	if config.IsHeroku() || config.IsConnectedHerokuDB() {
+		mysqlConf = herokuMySQLConf()
+	} else {
+		mysqlConf = localMySQLConf()
 	}
 
 	db, err := sql.Open("mysql", mysqlConf.FormatDSN())
 	if err != nil {
 		return nil, err
 	}
+
 	return &MySQLClient{db}, nil
+}
+
+func herokuMySQLConf() mysql.Config {
+	conf := mysql.Config{
+		User:                 os.Getenv("HEROKU_DB_USERNAME"),
+		Passwd:               os.Getenv("HEROKU_DB_PASSWORD"),
+		Net:                  "tcp",
+		Addr:                 os.Getenv("HEROKU_DB_HOST"),
+		DBName:               os.Getenv("HEROKU_DB_NAME"),
+		AllowNativePasswords: true,
+	}
+
+	return conf
+}
+
+func localMySQLConf() mysql.Config {
+	conf := mysql.Config{
+		User:                 "root",
+		Passwd:               os.Getenv("LOCAL_DB_ROOT_PASSWORD"),
+		Net:                  "tcp",
+		Addr:                 os.Getenv("LOCAL_DB_HOST"),
+		DBName:               os.Getenv("LOCAL_DB_NAME"),
+		AllowNativePasswords: true,
+	}
+
+	return conf
 }
