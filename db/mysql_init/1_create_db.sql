@@ -1,3 +1,4 @@
+-- データベース名を変えたら`.env.local`の`LOCAL_DB_NAME`も変える
 CREATE DATABASE IF NOT EXISTS todo_golang_api;
 USE todo_golang_api;
 
