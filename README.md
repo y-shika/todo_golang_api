@@ -18,10 +18,15 @@ TODOアプリを作りながらBackendを習得していくことを目的とし
         DB_ROOT_PASSWORD= # MYSQL_ROOT_PASSWORD
         DB_USER= # MYSQL_USER
         DB_PASSWORD=password= # MYSQL_PASSWORD
+
+        ENABLE_MOCK= # Mockか否かの指定
+        # Mockの場合 (stubを使う)
+        # ENABLE_MOCK=
+        # Mockではない場合 (gatewayを使う)
+        # ENABLE_MOCK=true
         ```
 
     2. 環境変数の適用
         ```sh
-        $ chmod +x environment.sh
-        $ ./environment.sh
+        $ source ./environment.sh
         ```
