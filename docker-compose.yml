@@ -10,13 +10,9 @@ services:
             - .:/go/src/todo_api
         working_dir: /go/src/todo_api
         command: realize start --name='app' --run
-        # Herokuデプロイに対応したため環境変数PORTを定義する必要がある
-        environment: 
-            PORT: ${PORT}
-            # mockか否かを環境変数で指定し、コンテナ内にも受け渡している
-            ENABLE_MOCK: ${ENABLE_MOCK}
-            # golang側のsqlクライアント認証で使用する
-            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+        # env_fileを指定しなければ.envから読み取った値を元にして環境変数を設定される
+        env_file: 
+            - ./.env.local
         ports: 
             - 8080:8080
         tty: true
@@ -24,6 +20,7 @@ services:
             - mysql
         restart: always
     mysql:
+        # コンテナ名を変えたら`.env.local`の`LOCAL_DB_HOST`も変える
         container_name: "mysql_db"
         image: mysql:8.0
         ports: 
@@ -35,10 +32,6 @@ services:
             - ./db/mysql_data:/var/lib/mysql
             # mysql8.0対応
             - ./db/mysql_conf/:/etc/mysql/conf.d
-        environment: 
-            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-            MYSQL_USER: ${DB_USER}
-            MYSQL_PASSWORD: ${DB_PASSWORD}
-            # timezone設定 (mysql_confに書くと修正箇所が多くなる)
-            TZ: Asia/Tokyo
+        env_file: 
+            - ./.env.local
         restart: always
