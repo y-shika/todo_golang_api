@@ -2,11 +2,15 @@ package gateway
 
 import (
 	"database/sql"
+	"log"
 	"os"
+	"time"
 
 	"github.com/go-sql-driver/mysql"
 	"github.com/y-shika/todo_golang_api/config"
 )
+
+const location = "Asia/Tokyo"
 
 // MySQLClient is a sql.DB wrapper.
 type MySQLClient struct {
@@ -17,11 +21,18 @@ type MySQLClient struct {
 func NewMySQLClient() (*MySQLClient, error) {
 	mysqlConf := mysql.Config{}
 
+	loc, err := time.LoadLocation(location)
+	if err != nil {
+		loc = time.FixedZone(location, 9*60*60)
+	}
+
 	// TODO: DBの接続先が増えたらこの部分の条件分岐も増やす
 	if config.IsHeroku() || config.IsConnectedHerokuDB() {
-		mysqlConf = herokuMySQLConf()
+		log.Println("Connect to HerokuDB")
+		mysqlConf = herokuMySQLConf(loc)
 	} else {
-		mysqlConf = localMySQLConf()
+		log.Println("Connect to LocalDB")
+		mysqlConf = localMySQLConf(loc)
 	}
 
 	db, err := sql.Open("mysql", mysqlConf.FormatDSN())
@@ -32,7 +43,7 @@ func NewMySQLClient() (*MySQLClient, error) {
 	return &MySQLClient{db}, nil
 }
 
-func herokuMySQLConf() mysql.Config {
+func herokuMySQLConf(loc *time.Location) mysql.Config {
 	conf := mysql.Config{
 		User:                 os.Getenv("HEROKU_DB_USERNAME"),
 		Passwd:               os.Getenv("HEROKU_DB_PASSWORD"),
@@ -40,12 +51,14 @@ func herokuMySQLConf() mysql.Config {
 		Addr:                 os.Getenv("HEROKU_DB_HOST"),
 		DBName:               os.Getenv("HEROKU_DB_NAME"),
 		AllowNativePasswords: true,
+		ParseTime:            true,
+		Loc:                  loc,
 	}
 
 	return conf
 }
 
-func localMySQLConf() mysql.Config {
+func localMySQLConf(loc *time.Location) mysql.Config {
 	conf := mysql.Config{
 		User:                 "root",
 		Passwd:               os.Getenv("LOCAL_DB_ROOT_PASSWORD"),
@@ -53,6 +66,8 @@ func localMySQLConf() mysql.Config {
 		Addr:                 os.Getenv("LOCAL_DB_HOST"),
 		DBName:               os.Getenv("LOCAL_DB_NAME"),
 		AllowNativePasswords: true,
+		ParseTime:            true,
+		Loc:                  loc,
 	}
 
 	return conf
