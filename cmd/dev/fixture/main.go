@@ -73,7 +73,7 @@ func loadTodos(db *gateway.MySQLClient) {
 		},
 	}
 
-	now := time.Now()
+	now := time.Now().Add(9 * time.Hour)
 
 	for _, todo := range todos {
 		ins, err := db.Prepare(`INSERT INTO todos (id, title, active, detail, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?) 
