@@ -45,7 +45,8 @@ func herokuMySQLConf() mysql.Config {
 		DBName:               os.Getenv("HEROKU_DB_NAME"),
 		AllowNativePasswords: true,
 		ParseTime:            true,
-		Loc:                  time.UTC,
+		// TODO: jawsDBにまでAsia/Tokyoのタイムゾーンを認識させる方法がわからないため、ひとまずUTCとした
+		Loc: time.UTC,
 	}
 
 	return conf
@@ -60,7 +61,8 @@ func localMySQLConf() mysql.Config {
 		DBName:               os.Getenv("LOCAL_DB_NAME"),
 		AllowNativePasswords: true,
 		ParseTime:            true,
-		Loc:                  time.UTC,
+		// TODO: jawsDBにまでAsia/Tokyoのタイムゾーンを認識させる方法がわからないため、ひとまずUTCとした
+		Loc: time.UTC,
 	}
 
 	return conf
