@@ -10,7 +10,7 @@ import (
 	"github.com/y-shika/todo_golang_api/config"
 )
 
-const location = "Asia/Tokyo"
+const location = "Asia/Osaka"
 
 // MySQLClient is a sql.DB wrapper.
 type MySQLClient struct {
