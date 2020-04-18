@@ -10,19 +10,9 @@ import (
 	"github.com/y-shika/todo_golang_api/config"
 )
 
-const location = "Asia/Tokyo"
-
 // MySQLClient is a sql.DB wrapper.
 type MySQLClient struct {
 	*sql.DB
-}
-
-func init() {
-	loc, err := time.LoadLocation(location)
-	if err != nil {
-		loc = time.FixedZone(location, 9*60*60)
-	}
-	time.Local = loc
 }
 
 // NewMySQLClient is a new MySQL client.
@@ -55,7 +45,7 @@ func herokuMySQLConf() mysql.Config {
 		DBName:               os.Getenv("HEROKU_DB_NAME"),
 		AllowNativePasswords: true,
 		ParseTime:            true,
-		Loc:                  time.Local,
+		Loc:                  time.UTC,
 	}
 
 	return conf
@@ -70,7 +60,7 @@ func localMySQLConf() mysql.Config {
 		DBName:               os.Getenv("LOCAL_DB_NAME"),
 		AllowNativePasswords: true,
 		ParseTime:            true,
-		Loc:                  time.Local,
+		Loc:                  time.UTC,
 	}
 
 	return conf
