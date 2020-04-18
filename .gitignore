@@ -42,3 +42,6 @@
 
 ### 環境変数 ###
 .env*
+
+### Makefile ###
+!Makefile
