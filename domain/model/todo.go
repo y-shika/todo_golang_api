@@ -7,5 +7,6 @@ type (
 		Title  string `json:"title"`
 		Active bool   `json:"active"`
 		Detail string `json:"detail"`
+		// createdAt, updatedAtはあるがクライアントにそれを返さなくても良いはずなので要素には加えない
 	}
 )

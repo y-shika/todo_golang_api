@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/y-shika/todo_golang_api/domain/model"
 	"github.com/y-shika/todo_golang_api/domain/repository"
@@ -40,7 +41,10 @@ func (gw *Todo) GetTodoLists(ctx context.Context) ([]*model.Todo, error) {
 	for rows.Next() {
 		var todo model.Todo
 
-		if err := rows.Scan(&todo.ID, &todo.Title, &todo.Active, &todo.Detail); err != nil {
+		// created_at, updated_atはapiとして返す必要がないので一時変数に入れるのみとしておく
+		var _time time.Time
+
+		if err := rows.Scan(&todo.ID, &todo.Title, &todo.Active, &todo.Detail, &_time, &_time); err != nil {
 			return nil, fmt.Errorf("get record from todo table: %w", err)
 		}
 
