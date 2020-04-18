@@ -1,6 +1,7 @@
 package model
 
 type (
+	// Todo is todo's mdoel.
 	Todo struct {
 		// TODO: 要素は仮決め
 		ID     string `json:"id"`
