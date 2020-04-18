@@ -21,10 +21,7 @@ type MySQLClient struct {
 func NewMySQLClient() (*MySQLClient, error) {
 	mysqlConf := mysql.Config{}
 
-	loc, err := time.LoadLocation(location)
-	if err != nil {
-		loc = time.FixedZone(location, 9*60*60)
-	}
+	loc := time.FixedZone(location, 9*60*60)
 
 	// TODO: DBの接続先が増えたらこの部分の条件分岐も増やす
 	if config.IsHeroku() || config.IsConnectedHerokuDB() {
