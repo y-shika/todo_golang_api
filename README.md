@@ -14,7 +14,7 @@ TODOアプリを作りながらBackendを習得していくことを目的とし
         `$ touch .env.local`
 
         `.env.local`を以下のように編集 (`=`の後の`#`部分を変更する)
-        
+
         注) Makefileの処理で、`.env.local`にコメントなどを残すと動作しない
         ``` 
         USAGE=local
@@ -25,10 +25,10 @@ TODOアプリを作りながらBackendを習得していくことを目的とし
         HEROKU_DB_PASSWORD= # HerokuDBのユーザパスワード
         HEROKU_DB_HOST= # HerokuDBのホスティング先
         LOCAL_DB_NAME=todo_golang_api
-        LOCAL_DB_ROOT_PASSWORD= # MYSQL_ROOT_PASSWORD
-        LOCAL_DB_USER_NAME= # MYSQL_USER
-        LOCAL_DB_USER_PASSWORD= # MYSQL_PASSWORD
         LOCAL_DB_HOST=mysql_db:3306
+        MYSQL_ROOT_PASSWORD= # MYSQL_ROOT_PASSWORD (docker-composeの関係でこの環境変数名は固定とする)
+        MYSQL_USER= # MYSQL_USER (docker-composeの関係でこの環境変数名は固定とする)
+        MYSQL_PASSWORD= # MYSQL_PASSWORD (docker-composeの関係でこの環境変数名は固定とする)
         ENABLE_MOCK= # 空白: gateway, true: stub (Mock)
         CONNECTED_DATABASE= # heroku: HerokuDBに接続, local: ローカルDBに接続
         ```
