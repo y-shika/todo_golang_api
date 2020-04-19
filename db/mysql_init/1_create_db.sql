@@ -7,7 +7,9 @@ CREATE TABLE IF NOT EXISTS todos (
     id varchar(36) primary key,
     title text,
     active boolean,
-    detail text
+    detail text,
+    created_at datetime,
+    updated_at datetime
 );
 
-INSERT INTO todos VALUES ("1", "Title_1", true, "Detail_1"), ("2", "Title_2", true, "Detail_2"), ("3", "Title_3", true, "Detail_3");
+INSERT INTO todos VALUES ("1", "Title_1", true, "Detail_1", NOW(), NOW()), ("2", "Title_2", true, "Detail_2", NOW(), NOW()), ("3", "Title_3", true, "Detail_3", NOW(), NOW());
