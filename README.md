@@ -1,4 +1,4 @@
-# todo_backend
+# todo_golang_api
 
 Backend入門のプロジェクト
 
@@ -14,6 +14,7 @@ TODOアプリを作りながらBackendを習得していくことを目的とし
         `$ touch .env.local`
 
         `.env.local`を以下のように編集 (`=`の後の`#`部分を変更する)
+        
         注) Makefileの処理で、`.env.local`にコメントなどを残すと動作しない
         ``` 
         USAGE=local
