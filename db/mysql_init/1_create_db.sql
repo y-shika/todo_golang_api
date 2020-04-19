@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS todo_golang_api;
 USE todo_golang_api;
 
 CREATE TABLE IF NOT EXISTS todos (
-    -- idはuuid v4を使っているため36としている
+    -- idはuuid v4を使うことを想定して36としている
     id varchar(36) primary key,
     title text,
     active boolean,
