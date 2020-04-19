@@ -54,8 +54,9 @@ func herokuMySQLConf() mysql.Config {
 
 func localMySQLConf() mysql.Config {
 	conf := mysql.Config{
-		User:                 "root",
-		Passwd:               os.Getenv("LOCAL_DB_ROOT_PASSWORD"),
+		User: "root",
+		// MySQLをdocker-composeで建てる際に環境変数名をMYSQL_ROOT_PASSWORDはそのままにしないと動作しないため
+		Passwd:               os.Getenv("MYSQL_ROOT_PASSWORD"),
 		Net:                  "tcp",
 		Addr:                 os.Getenv("LOCAL_DB_HOST"),
 		DBName:               os.Getenv("LOCAL_DB_NAME"),
